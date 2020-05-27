@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+const fs = require('fs')
+const fileName = process.argv[2] + '/strings.xml'
+const contents = fs.readFileSync(fileName) + ""
+const lines = contents.split('\n')
+const filtered = lines.filter(line => {
+  if (line.startsWith('<<')) return false
+  if (line.startsWith('==')) return false
+  return !line.startsWith('>>')
+})
+const output = filtered.join('\n')
+fs.writeFileSync(fileName, output)
+console.log('output: ' + output)
